@@ -1,7 +1,6 @@
 
-from PIL import Image
 from selenium import webdriver
-import em
+import em,time
 
 driver = webdriver.PhantomJS()
 url = 'https://mp.weixin.qq.com/profile?src=3&timestamp=1505268498&ver=1&signature=jmaYw3DkdTVDWD0SCOphrtO4IoQZEQSpixhkVNBEMpHFVxfOgcyO5mqUjQWFwcpd2Ly84Q26ge5cKu2Y3HVB0A=='
@@ -17,7 +16,8 @@ driver.set_window_size(1200, 800)
 driver.get(url)
 
 #获取截图
-imageBin = driver.get_screenshot_as_base64()
+time.sleep(5)
+imageBin = driver.get_screenshot_as_png()
 em.send(imageBin)
 #
 # #获取指定元素位置
