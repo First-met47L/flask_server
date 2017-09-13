@@ -8,26 +8,21 @@ driver.set_window_size(1200, 800)
 # cookies = driver.get_cookies()
 
 # print(cookies)
-# 处理cookies
 # driver.get(url)
 # for k, v in cookies.iteritems():
 #     cookie_dict = {'name': k, 'value': v}
 #     driver.add_cookie(cookie_dict)
 driver.get(url)
 
-#获取截图
-time.sleep(5)
 imageBin = driver.get_screenshot_as_png()
 em.send(imageBin)
-#
-# #获取指定元素位置
+
 # element = driver.find_element_by_id('seccodeImage')
 # left = int(element.location['x'])
 # top = int(element.location['y'])
 # right = int(element.location['x'] + element.size['width'])
 # bottom = int(element.location['y'] + element.size['height'])
 #
-# # 通过Image处理图像
 # im = Image.open('screenshot.png')
 # im = im.crop((left, top, right, bottom))
 # im.save('code.png')
