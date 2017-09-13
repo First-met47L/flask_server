@@ -9,7 +9,7 @@ import smtplib
 
 
 def _format_addr(s):
-    #
+    #12
     name, addr = parseaddr(s)
     return formataddr((Header(name, 'utf-8').encode(), addr))
 
