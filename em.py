@@ -14,11 +14,11 @@ def _format_addr(s):
     return formataddr((Header(name, 'utf-8').encode(), addr))
 
 def send(ImageBin):
-    mine = MIMEBase('image','png',filename='verify.png')
-    mine.add_header('Content-Disposition','attachment',filename = 'verify.png')
-    mine.add_header('Content-ID','<0>')
-    mine.add_header('X-Attachment-Id','0')
-    mine.set_payload(ImageBin)
+    # mine = MIMEBase('image','png',filename='verify.png')
+    # mine.add_header('Content-Disposition','attachment',filename = 'verify.png')
+    # mine.add_header('Content-ID','<0>')
+    # mine.add_header('X-Attachment-Id','0')
+    # mine.set_payload(ImageBin)
 
 
     from_addr = '13288247797@163.com'
@@ -32,8 +32,8 @@ def send(ImageBin):
     msg['From'] = _format_addr('verifyWechat <%s>' % from_addr)
     msg['To'] = _format_addr('351264614@qq.com <%s>' % to_addr)
     msg['Subject'] = Header('来处理问题了啊', 'utf-8').encode()
-    encoders.encode_base64(mine)
-    msg.attach(mine)
+    # encoders.encode_base64(mine)
+    # msg.attach(mine)
     server = smtplib.SMTP(smtp_server, 25)
     server.set_debuglevel(1)
     server.login(from_addr, password)
