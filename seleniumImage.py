@@ -28,7 +28,7 @@ time.sleep(5)
 
 msg = None
 try:
-    res = requests.get('http://localhost:17250/email/verify/%s'%subjectText,timeout=600)
+    res = requests.get('http://localhost:5000/email/verify/%s'%subjectText,timeout=600)
 except requests.exceptions.Timeout as e:
     pass
 

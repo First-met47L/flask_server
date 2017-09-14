@@ -42,4 +42,4 @@ def getVerifyMsg(subject):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port='17250')
+    app.run(host='0.0.0.0',port='5000')
