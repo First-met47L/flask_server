@@ -1,6 +1,6 @@
 
 from selenium import webdriver
-import em,time,requests
+import time,requests
 from EmailService import EmailService
 
 driver = webdriver.PhantomJS()
@@ -26,7 +26,7 @@ subjectText = '西洋志-请输入验证码-no:'+str(int(time.time()*1000))
 emailService.send(subjectText=subjectText, contentText='hello,from xyzSrapy', imageBin=imageBin)
 time.sleep(5)
 
-msg = None
+res = None
 try:
     res = requests.get('http://localhost:5000/email/verify/%s'%subjectText,timeout=600)
 except requests.exceptions.Timeout as e:
