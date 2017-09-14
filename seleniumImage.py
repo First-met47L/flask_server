@@ -8,12 +8,19 @@ url = 'https://mp.weixin.qq.com/profile?src=3&timestamp=1505376389&ver=1&signatu
 driver.set_window_size(1200, 800)
 cookies = driver.get_cookies()
 
+
 # print(cookies)
 # driver.get(url)
 # for k, v in cookies.iteritems():
 #     cookie_dict = {'name': k, 'value': v}
 #     driver.add_cookie(cookie_dict)
 driver.get(url)
+
+inputElement = driver.find_element_by_id('input')
+
+commitElement = driver.find_element_by_id('su')
+
+
 
 imageBin = driver.get_screenshot_as_png()
 email = '351264614@xiyanghui.com'
@@ -24,18 +31,21 @@ smtp_server = 'smtp.exmail.qq.com'
 emailService = EmailService(email, password, otherEmails, pop3_server, smtp_server)
 subjectText = '西洋志-请输入验证码-no:'+str(int(time.time()*1000))
 emailService.send(subjectText=subjectText, contentText='hello,from xyzSrapy', imageBin=imageBin)
-time.sleep(5)
 
-res = None
-try:
-    res = requests.get('http://localhost:5000/email/verify/%s'%subjectText,timeout=600)
-except requests.exceptions.Timeout as e:
-    pass
+msg = None
+for i in range(10):
+    try:
+        res = requests.get('http://localhost:5000/email/verify/%s'%subjectText,timeout=60)
+        msg = res.text
+        if msg:
+            break
+    except requests.exceptions.Timeout as e:
+        pass
 
-print(res.text)
 
-
-
+print(msg)
+inputElement.send_keys(msg)
+commitElement.click()
 
 # element = driver.find_element_by_id('seccodeImage')
 # left = int(element.location['x'])
