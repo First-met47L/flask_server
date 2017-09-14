@@ -24,6 +24,7 @@ smtp_server = 'smtp.exmail.qq.com'
 emailService = EmailService(email, password, otherEmails, pop3_server, smtp_server)
 subjectText = '西洋志-请输入验证码-no:'+str(int(time.time()*1000))
 emailService.send(subjectText=subjectText, contentText='hello,from xyzSrapy', imageBin=imageBin)
+time.sleep(5)
 
 msg = None
 try:

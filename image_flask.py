@@ -39,7 +39,6 @@ def getVerifyMsg(subject):
         if verifyMsg:
             print(verifyMsg)
             return verifyMsg
-        time.sleep(10)
 
 
 if __name__ == '__main__':
