@@ -18,8 +18,7 @@ driver.get(url)
 
 inputElement = driver.find_element_by_id('input')
 
-commitElement = driver.find_element_by_id('su')
-
+commitElement = driver.find_element_by_id('bt')
 
 
 imageBin = driver.get_screenshot_as_png()
