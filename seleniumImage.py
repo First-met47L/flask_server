@@ -46,7 +46,10 @@ for i in range(10):
 print(msg)
 inputElement.send_keys(msg)
 commitElement.click()
-
+time.sleep(5)
+imageBin = driver.get_screenshot_as_png()
+subjectText='result'
+emailService.send(subjectText=subjectText, contentText='hello,from xyzSrapy', imageBin=imageBin)
 # element = driver.find_element_by_id('seccodeImage')
 # left = int(element.location['x'])
 # top = int(element.location['y'])
