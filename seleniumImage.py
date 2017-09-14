@@ -1,9 +1,10 @@
 
 from selenium import webdriver
-import em,time
+import em,time,requests
+from EmailService import EmailService
 
 driver = webdriver.PhantomJS()
-url = 'https://mp.weixin.qq.com/profile?src=3&timestamp=1505290706&ver=1&signature=jmaYw3DkdTVDWD0SCOphrtO4IoQZEQSpixhkVNBEMpHFVxfOgcyO5mqUjQWFwcpdR2My9W1mHfQTcuOxusge2g=='
+url = 'https://mp.weixin.qq.com/profile?src=3&timestamp=1505376389&ver=1&signature=jmaYw3DkdTVDWD0SCOphrtO4IoQZEQSpixhkVNBEMpHFVxfOgcyO5mqUjQWFwcpdb6AkD5SoLH2GhsLSZpkdNQ=='
 driver.set_window_size(1200, 800)
 cookies = driver.get_cookies()
 
@@ -15,7 +16,25 @@ cookies = driver.get_cookies()
 driver.get(url)
 
 imageBin = driver.get_screenshot_as_png()
-em.send(imageBin)
+email = '351264614@xiyanghui.com'
+password = 'zg8FaBvq4cH4fsCF'
+otherEmails = ['351264614@qq.com']
+pop3_server = 'imap.exmail.qq.com'
+smtp_server = 'smtp.exmail.qq.com'
+emailService = EmailService(email, password, otherEmails, pop3_server, smtp_server)
+subjectText = '西洋志-请输入验证码-no:'+str(int(time.time()*1000))
+emailService.send(subjectText=subjectText, contentText='hello,from xyzSrapy', imageBin=imageBin)
+
+msg = None
+try:
+    res = requests.get('http://localhost:17250/email/verify/%s'%subjectText,timeout=600)
+except requests.exceptions.Timeout as e:
+    pass
+
+print(res.text)
+
+
+
 
 # element = driver.find_element_by_id('seccodeImage')
 # left = int(element.location['x'])
