@@ -61,35 +61,6 @@ class EmailService(object):
                 break
         return
 
-    @staticmethod
-    def print_info(my_msg, indent=0):
-        if indent == 0:
-            for header in ['From', 'To', 'Subject']:
-                value = my_msg.get(header, '')
-                if value:
-                    if header == 'Subject':
-                        value =EmailService.decode_str(value)
-                    else:
-                        hdr, addr = parseaddr(value)
-                        name = EmailService.decode_str(hdr)
-                        value = u'%s <%s>' % (name, addr)
-                print('%s%s: %s' % (' ' * indent, header, value))
-        if my_msg.is_multipart():
-            parts = my_msg.get_payload()
-            for n, part in enumerate(parts):
-                print('%spart %s' % (' ' * indent, n))
-                print('%s-----------------------------------' % ' ' * indent)
-                EmailService.print_info(part, indent + 1)
-        else:
-            content_type = my_msg.get_content_type()
-            if content_type == 'text/plain' or content_type == 'text/html':
-                content = my_msg.get_payload(decode=True)
-                charset = EmailService.guess_charset(my_msg)
-                if charset:
-                    content = content.decode(charset)
-                    print('%sText: %s' % (' ' * indent, content + '...'))
-            else:
-                print('%sAttachment: %s' % (' ' * indent, content_type))
 
     def __new__(cls, *args, **kwargs):
         self = super(EmailService, cls).__new__(cls)

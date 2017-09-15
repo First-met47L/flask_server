@@ -1,7 +1,9 @@
-from flask import Flask, render_template
-import requests, json, time
-import EmailService
 from urllib import parse
+
+import json
+import requests
+from flask import Flask
+from wechatVerify import wechatVerify
 
 app = Flask(__name__)
 
@@ -21,24 +23,14 @@ def add(name):
     return json.dumps(resDict)
 
 
-@app.route('/email/verify/<string:subject>')
-def getVerifyMsg(subject):
-    '''
-    :param subject:匹配标题
-    :return:
-    '''
-    email = '351264614@xiyanghui.com'
-    password = 'zg8FaBvq4cH4fsCF'
-    otherEmails = ['351264614@qq.com']
-    pop3_server = 'imap.exmail.qq.com'
-    smtp_server = 'smtp.exmail.qq.com'
-    emailService = EmailService.EmailService(email, password, otherEmails, pop3_server, smtp_server)
-    subject = parse.unquote(subject)
-    for i in range(10):
-        verifyMsg = emailService.get(subject)
-        if verifyMsg:
-            print(verifyMsg)
-            return verifyMsg
+@app.route('/wechat/email/verify/<string:url>')
+def verify(url):
+    result = wechatVerify().execute(url=url)
+    if result:
+        data = dict(project='xyh_magazine', spider='wechat')
+        res = requests.post('http://localhost:6800/schedule.json', data=data)
+    
+
 
 
 if __name__ == '__main__':

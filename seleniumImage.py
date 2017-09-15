@@ -1,7 +1,10 @@
 
+import requests
+import time
+
 from selenium import webdriver
-import time,requests
-from EmailService import EmailService
+
+from tool.emailService import EmailService
 
 driver = webdriver.PhantomJS()
 url = 'https://mp.weixin.qq.com/profile?src=3&timestamp=1505376389&ver=1&signature=jmaYw3DkdTVDWD0SCOphrtO4IoQZEQSpixhkVNBEMpHFVxfOgcyO5mqUjQWFwcpdb6AkD5SoLH2GhsLSZpkdNQ=='
