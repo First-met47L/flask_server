@@ -1,4 +1,4 @@
-
+from tool import log
 import requests
 import time
 

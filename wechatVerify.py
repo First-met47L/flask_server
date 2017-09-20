@@ -4,9 +4,10 @@ from selenium import webdriver
 import selenium
 from tool.emailService import EmailService
 from settings import emailSettings
-
+from tool import log
 
 class wechatVerify(EmailService):
+    logger = log.Log.getLog("verify")
     def __init__(self):
         mainEmail = emailSettings.email
         password = emailSettings.password
@@ -29,6 +30,7 @@ class wechatVerify(EmailService):
                 inputElement = driver.find_element_by_id('input')
                 commitElement = driver.find_element_by_id('bt')
             except Exception as e:
+                self.logger.info("successful")
                 self.send(subjectText="selenium.common.exceptions.NoSuchElementException",
                           contentText='hello, from xyzSrapy', imageBin=imageBin)
                 return True
@@ -38,16 +40,11 @@ class wechatVerify(EmailService):
 
             # get msg from email
             msg = self.authentication(subjectText)
+            self.logger.info("return msg >> %s"%msg)
             inputElement.send_keys(msg)
             commitElement.click()
             time.sleep(5)
             # if current_url != url ,verify successful
-            if driver.current_url != url:
-                subjectText = 'wechat verify Successful'
-                self.send(subjectText=subjectText, contentText="hello,from xyzSrapy",
-                          imageBin=driver.get_screenshot_as_png())
-                driver.close()
-                return True
 
             if count > 30:
                 subjectText = "wechat verify failed"
