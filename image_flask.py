@@ -3,6 +3,7 @@ from urllib import parse
 import json
 import requests
 from flask import Flask
+from flask import request
 from wechatVerify import wechatVerify
 
 app = Flask(__name__)
@@ -23,12 +24,18 @@ def add(name):
     return json.dumps(resDict)
 
 
-@app.route('/wechat/email/verify/<string:url>')
-def verify(url):
+@app.route('/wechat/email/verify')
+def verify():
+    url = request.args.get('url')
     result = wechatVerify().execute(url=url)
     if result:
         data = dict(project='xyh_magazine', spider='wechat')
         res = requests.post('http://localhost:6800/schedule.json', data=data)
+        return "verify successful"
+    return "verify faild"
+
+
+
     
 
 

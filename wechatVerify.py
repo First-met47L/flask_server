@@ -1,14 +1,12 @@
 import requests
 import time
 from selenium import webdriver
+import selenium
 from tool.emailService import EmailService
 from settings import emailSettings
 
 
 class wechatVerify(EmailService):
-
-
-
     def __init__(self):
         mainEmail = emailSettings.email
         password = emailSettings.password
@@ -18,43 +16,47 @@ class wechatVerify(EmailService):
         super(wechatVerify, self).__init__(mainEmail=mainEmail, password=password, otherEmails=otherEmails,
                                            pop3Server=pop3_server, smtpServer=smtp_server, emailName='xyz')
 
-    def execute(self,url):
+    def execute(self, url):
         driver = webdriver.PhantomJS()
         driver.set_window_size(1200, 800)
         driver.get(url)
-        #until authenticate successful(count <= 10)
+        # until authenticate successful(count <= 10)
         count = 1
         while True:
-            inputElement = driver.find_element_by_id('input')
-            commitElement = driver.find_element_by_id('bt')
-            #send email
             imageBin = driver.get_screenshot_as_png()
+
+            try:
+                inputElement = driver.find_element_by_id('input')
+                commitElement = driver.find_element_by_id('bt')
+            except Exception as e:
+                self.send(subjectText="selenium.common.exceptions.NoSuchElementException",
+                          contentText='hello, from xyzSrapy', imageBin=imageBin)
+                return True
+            # send email
             subjectText = '西洋志-请输入验证码-no:' + str(int(time.time() * 1000))
             self.send(subjectText=subjectText, contentText='hello, from xyzSrapy', imageBin=imageBin)
 
-            #get msg from email
+            # get msg from email
             msg = self.authentication(subjectText)
             inputElement.send_keys(msg)
             commitElement.click()
             time.sleep(5)
-            #if current_url != url ,verify successful
+            # if current_url != url ,verify successful
             if driver.current_url != url:
                 subjectText = 'wechat verify Successful'
-                self.send(subjectText=subjectText,contentText="hello,from xyzSrapy",imageBin = driver.get_screenshot_as_png())
+                self.send(subjectText=subjectText, contentText="hello,from xyzSrapy",
+                          imageBin=driver.get_screenshot_as_png())
                 driver.close()
                 return True
 
-            count += 1
-            if count >10:
+            if count > 30:
+                subjectText = "wechat verify failed"
+                self.send(subjectText=subjectText, contentText="hello,from xyzScrapy")
                 return False
-
-
+            count += 1
 
     def authentication(self, searchSubject):
         for i in range(10):
             verifyMsg = self.get(searchSubject=searchSubject)
             if verifyMsg:
                 return verifyMsg
-
-
-
