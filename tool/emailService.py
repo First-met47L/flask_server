@@ -10,7 +10,6 @@ import re
 import smtplib
 import poplib
 
-
 class EmailService(object):
     @staticmethod
     def format_addr(address):
@@ -43,6 +42,7 @@ class EmailService(object):
     @staticmethod
     def getVerifyMsg(msgObj,searchSubject):
         subject = msgObj.get('Subject')
+
         subjectCompile = re.compile(searchSubject)
         if not subject or not re.search(subjectCompile,EmailService.decode_str(subject)):
             return

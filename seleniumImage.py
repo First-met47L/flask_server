@@ -19,9 +19,9 @@ cookies = driver.get_cookies()
 #     driver.add_cookie(cookie_dict)
 driver.get(url)
 
-inputElement = driver.find_element_by_id('input')
-
-commitElement = driver.find_element_by_id('bt')
+# inputElement = driver.find_element_by_id('input')
+#
+# commitElement = driver.find_element_by_id('bt')
 
 
 imageBin = driver.get_screenshot_as_png()
@@ -46,8 +46,8 @@ for i in range(10):
 
 
 print(msg)
-inputElement.send_keys(msg)
-commitElement.click()
+# inputElement.send_keys(msg)
+# commitElement.click()
 time.sleep(5)
 imageBin = driver.get_screenshot_as_png()
 subjectText='result'
