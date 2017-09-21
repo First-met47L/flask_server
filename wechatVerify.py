@@ -41,8 +41,9 @@ class wechatVerify(EmailService):
             # get msg from email
             msg = self.authentication(subjectText)
             self.logger.info("return msg >> %s"%msg)
-            inputElement.send_keys(msg)
-            commitElement.click()
+            if msg:
+                inputElement.send_keys(msg)
+                commitElement.click()
             time.sleep(5)
             # if current_url != url ,verify successful
 
@@ -54,6 +55,7 @@ class wechatVerify(EmailService):
 
     def authentication(self, searchSubject):
         for i in range(10):
+            time.sleep(5)
             verifyMsg = self.get(searchSubject=searchSubject)
             if verifyMsg:
                 return verifyMsg
