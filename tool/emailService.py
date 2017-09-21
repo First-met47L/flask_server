@@ -26,6 +26,8 @@ class EmailService(object):
         value, charset = decode_header(s)[0]
         if charset:
             value = value.decode(charset)
+        if isinstance(value, bytes):
+            value = value.decode('utf-8')
         return value
 
     @staticmethod
@@ -44,6 +46,9 @@ class EmailService(object):
         subject = msgObj.get('Subject')
 
         subjectCompile = re.compile(searchSubject)
+
+        print(EmailService.decode_str(subject))
+
         if not subject or not re.search(subjectCompile,EmailService.decode_str(subject)):
             return
         content_type = msgObj.get_content_type()

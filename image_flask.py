@@ -34,8 +34,8 @@ def verify():
     except Exception as e:
         log.Log.getLog("verify").exception(e)
     if result:
-        data = dict(project='xyh_magazine', spider='wechat')
-        res = requests.post('http://localhost:6800/schedule.json', data=data)
+        # data = dict(project='xyh_magazine', spider='wechat')
+        # res = requests.post('http://localhost:6800/schedule.json', data=data)
         return "verify successful"
     return "verify faild"
 
