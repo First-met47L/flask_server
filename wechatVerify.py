@@ -42,11 +42,12 @@ class wechatVerify(EmailService):
             msg = self.authentication(subjectText)
             self.logger.info("return msg >> %s"%msg)
             if msg:
+                inputElement.clear()
                 inputElement.send_keys(msg)
                 commitElement.click()
             # if current_url != url ,verify successful
 
-            if count > 30:
+            if count > 10:
                 subjectText = "wechat verify failed"
                 self.send(subjectText=subjectText, contentText="hello,from xyzScrapy")
                 return False
@@ -57,4 +58,4 @@ class wechatVerify(EmailService):
             verifyMsg = self.get(searchSubject=searchSubject)
             if verifyMsg:
                 return verifyMsg
-            time.sleep(300)
+            time.sleep(30)
