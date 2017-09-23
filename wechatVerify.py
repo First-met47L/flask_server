@@ -46,7 +46,7 @@ class wechatVerify(EmailService):
                 inputElement.send_keys(msg)
                 commitElement.click()
             # if current_url != url ,verify successful
-
+            time.sleep(30)
             if count > 10:
                 subjectText = "wechat verify failed"
                 self.send(subjectText=subjectText, contentText="hello,from xyzScrapy")
