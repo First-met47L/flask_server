@@ -45,6 +45,7 @@ class wechatVerify(EmailService):
                 inputElement.clear()
                 inputElement.send_keys(msg)
                 commitElement.click()
+                time.sleep(30)
             # if current_url != url ,verify successful
             else:
                 return False
